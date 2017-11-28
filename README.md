@@ -1,4 +1,4 @@
-# shop-imooc
+# imooc-shop-web
 
 > A Vue.js project
 
