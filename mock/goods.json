@@ -1,0 +1,24 @@
+{
+    "status" : 0,
+    "msg" : "",
+    "result" : [
+        {
+            "pId" : 1,
+            "pName" : "iphone 6",
+            "pPrice" : 3399,
+            "pImg" : "https://dummyimage.com/300/FF0"
+        },
+        {
+            "pId" : 2,
+            "pName" : "iphone 7",
+            "pPrice" : 4399,
+            "pImg" : "https://dummyimage.com/300/CCC"
+        },
+        {
+            "pId" : 3,
+            "pName" : "iphone 8",
+            "pPrice" : 5399,
+            "pImg" : "https://dummyimage.com/300/0F0"
+        }
+    ]
+}

@@ -1,29 +1,30 @@
 <template>
     <div id="app">
-        <img src="./assets/logo.png">
+        <x-header></x-header>
+        <breadcrumb>
+            <li slot="a"><a href="#">Test</a></li>
+        </breadcrumb>
         <router-view/>
+        <x-footer></x-footer>
     </div>
 </template>
 
 <script>
+import Breadcrumb from '~components/Breadcrumb.vue';
+import XHeader from '~components/XHeader.vue';
+import XFooter from '~components/XFooter.vue';
+
 export default {
-    name: 'app'
+    name: 'app',
+    components: {
+        XHeader, XFooter, Breadcrumb
+    }
 };
 </script>
 
 <style lang="less">
 #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+
 }
 
-.aa {
-    .qq {
-        font-size: 12px;
-    }
-}
 </style>

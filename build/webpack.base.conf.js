@@ -25,6 +25,8 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      '~components': resolve('src/components'),
+      '~views': resolve('src/views')
     }
   },
   module: {
@@ -74,5 +76,15 @@ module.exports = {
         }
       }
     ]
+  },
+  externals: {
+    jquery: "jQuery"
   }
+  // 增加一个plugins
+  // plugins: [
+  //   new webpack.ProvidePlugin({
+  //       $: "jquery",
+  //       jQuery: "jquery"
+  //   })
+  // ],
 }
