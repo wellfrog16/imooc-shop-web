@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row list-goods">
                 <div v-for="item in goodsList" :key="item.id" class="col-sm-3 col-xs-12">
                     <img v-bind:src="item.url" alt="" class="img-responsive">
                     <p>{{ item.title }}</p>
@@ -80,5 +80,9 @@
 </script>
 
 <style lang="less">
-
+    .list-goods {
+        p {
+            height: 100px;
+        }
+    }
 </style>
