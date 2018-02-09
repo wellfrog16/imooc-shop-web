@@ -1,11 +1,13 @@
 <template>
     <div id="app">
-        <x-header></x-header>
-        <breadcrumb>
-            <li slot="a"><a href="#">Test</a></li>
-        </breadcrumb>
-        <router-view/>
-        <x-footer></x-footer>
+        <div class="container">
+            <x-header></x-header>
+            <breadcrumb>
+                <li slot="a"><a href="#">Test</a></li>
+            </breadcrumb>
+            <router-view/>
+            <x-footer></x-footer>
+        </div>
     </div>
 </template>
 
@@ -23,8 +25,8 @@ export default {
 </script>
 
 <style lang="less">
-#app {
-
+body {
+    padding: 50px 0 20px 0;
 }
 
 </style>
