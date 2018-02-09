@@ -1,5 +1,5 @@
 <template>
-<div class="container-fluid">
+<div class="container-fluid goods">
     <div class="row">
         <div class="col-xs-3">
             <div class="panel panel-info">
@@ -37,9 +37,12 @@
                 </div>
             </div>
             <div class="row list-goods">
-                <div v-for="item in goodsList" :key="item.id" class="col-sm-3 col-xs-12">
-                    <img v-bind:src="item.url" alt="" class="img-responsive">
-                    <p>{{ item.title }}</p>
+                <div v-for="item in list" :key="item.id" class="col-sm-3 col-xs-12">
+                    <img v-bind:src="item.photo" alt="" class="img-responsive">
+                    <div class="header">
+                        <span class="name">{{ item.name }}</span>
+                        <span class="price">{{ item.price }}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,41 +51,43 @@
 </template>
 
 <script>
-    import axios from 'axios';
+import api from '@/api/goods';
 
-    export default {
-        name: 'list',
-        data() {
-            return {
-                goodsList: [],
-                idFiler: [
-                    { start: 1, end: 4 },
-                    { start: 5, end: 8 },
-                    { start: 9, end: 12 }
-                ]
-            };
-        },
-        methods: {
-            getGoodsList() {
-                axios.get('http://jsonplaceholder.typicode.com/photos?albumId=1').then((result) => {
-                    for (const item of result.data) {
-                        // for (let [index, value] of new Map(result.data.map((value, index) => [index, value]))) {
-                        if (item.id > 10) { break; }
-                        this.goodsList.push(item);
-                    }
-                });
-            }
-        },
-        mounted() {
-            this.getGoodsList();
+export default {
+    name: 'list',
+    data() {
+        return {
+            total: 0,
+            pagesize: 10,
+            page: 1,
+            list: [],
+            idFiler: [
+                { start: 1, end: 4 },
+                { start: 5, end: 8 },
+                { start: 9, end: 12 }
+            ]
+        };
+    },
+    created() {
+        this.loadList(this.page, this.pagesize);
+    },
+    methods: {
+        async loadList(page, pagesize) {
+            const { total, list } = await api.list({page, pagesize});
+            this.total = total;
+            this.list = list;
         }
-    };
+    }
+};
 </script>
 
 <style lang="less">
+.goods {
     .list-goods {
-        p {
-            height: 100px;
+        .header {
+            .name { float: left; }
+            .price { float: right; }
         }
     }
+}
 </style>
