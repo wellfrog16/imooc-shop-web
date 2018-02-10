@@ -15,5 +15,7 @@
         text-align: center;
         line-height: 30px;
         background-color: gray;
+        margin: 0 -15px;
+        color: #Fff;
     }
 </style>
