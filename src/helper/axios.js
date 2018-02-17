@@ -3,7 +3,7 @@ import config from '../config';
 
 const instance = axios.create({
     baseURL: config.apiServer,
-    // withCredentials: true,
+    withCredentials: true,
     timeout: 5000
 });
 
@@ -19,7 +19,7 @@ instance.interceptors.request.use((require) => {
     return require;
 });
 
-instance.interceptors.response.use((response) => {
+instance.interceptors.response.use(response => {
     // loadingInstancce.close();
     const { data, config } = response;
     // console.log(response);
@@ -31,11 +31,17 @@ instance.interceptors.response.use((response) => {
         // Notification.error({
         //     title: response.statusText
         // });
-        console.log(response.statusText);
+        // console.log(response.statusText);
     }
     return data;
 }, (error) => {
-    return error;
+    const { data } = error.response;
+
+    if (error.response.status === 401) {
+        console.log('没有权限');
+    }
+
+    return data;
 });
 
 export default instance;
