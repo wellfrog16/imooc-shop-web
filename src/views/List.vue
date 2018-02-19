@@ -54,6 +54,7 @@ import Modal from '~components/Modal.vue';
 import goodApi from '@/api/goods';
 import cartApi from '@/api/cart';
 import $ from 'jquery';
+import utils from '@/utils/utils';
 
 export default {
     name: 'list',
@@ -85,20 +86,27 @@ export default {
     },
     methods: {
         async loadList(flagConcat = false) {
-            const { total, list } = await goodApi.list(this.listParams);
-            this.total = total;
-            if (flagConcat) {
-                this.list = this.list.concat(list);
-                this.busy = list.length < this.pagesize;
-                this.loadInfo = list.length < this.pagesize ? '没有更多了' : '加载中';
+            const res = await goodApi.list(this.listParams);
+
+            if (res.err) {
+                utils.log(res.err);
             } else {
-                this.list = list;
-                this.$nextTick(() => {
-                    setTimeout(() => {
-                        this.busy = false;
-                        this.loadInfo = '加载中';
-                    }, 500);
-                });
+                const { list, total } = res.data;
+
+                this.total = total;
+                if (flagConcat) {
+                    this.list = this.list.concat(list);
+                    this.busy = list.length < this.pagesize;
+                    this.loadInfo = list.length < this.pagesize ? '没有更多了' : '加载中';
+                } else {
+                    this.list = list;
+                    this.$nextTick(() => {
+                        setTimeout(() => {
+                            this.busy = false;
+                            this.loadInfo = '加载中';
+                        }, 500);
+                    });
+                }
             }
         },
         sort() {
@@ -120,11 +128,11 @@ export default {
             }, 1000);
         },
         async addCart(id) {
-            const effect = await cartApi.add(id);
-            if (effect === 1) {
+            const res = await cartApi.insert(id);
+            if (!res.err) {
                 $('#cartMessage').modal('show');
             } else {
-                console.log(effect);
+                console.log(res.err);
             }
         },
         refresh() {

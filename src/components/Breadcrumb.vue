@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <ol class="breadcrumb">
-            <li><a href="/">Home</a></li>
+            <li><router-link to="/">Home</router-link></li>
             <slot name="a"></slot>
         </ol>
     </div>

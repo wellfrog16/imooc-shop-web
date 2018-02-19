@@ -18,16 +18,7 @@
                     <li><a href="#" v-text="user.name"></a></li>
                     <li v-if="!user.id" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li>
                     <li v-if="user.id" @click="logout"><a href="#">Logout</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">frog <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">登陆</a></li>
-                            <li><a href="#">状态</a></li>
-                            <li><a href="#">状态</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">购物车</a></li>
-                        </ul>
-                    </li>
+                    <li v-if="user.id"><router-link to="/cart">Cart <span class="badge">5</span></router-link></li>
                 </ul>
             </div>
         </div>
@@ -66,8 +57,8 @@ export default {
     data() {
         return {
             user: {
-                name: '',
-                id: 0
+                id: 0,
+                name: ''
             },
             loginError: false,
             form: {
@@ -92,31 +83,33 @@ export default {
         async login() {
             // console.log(`username:${this.form.fields.username}, password:${this.form.fields.password}`);
 
-            const info = await api.login({name: this.form.fields.name, password: this.form.fields.password});
+            const res = await api.login({name: this.form.fields.name, password: this.form.fields.password});
 
-            if (info.id) {
-                this.user = Object.assign(this.user, info);
-                this.loginError = false;
-                $('#myModal').modal('hide');
-            } else {
+            if (res.err) {
                 this.loginError = true;
                 setTimeout(() => {
                     this.loginError = false;
                 }, 2000);
+            } else if (res.data.id) {
+                this.user.id = res.data.id;
+                this.user.name = res.data.name;
+                $('#myModal').modal('hide');
             }
         },
         async logout() {
             const res = await api.logout();
 
-            if (res.logout === 'ok') {
-                this.user = {};
+            if (res.data.logout) {
+                this.user.id = 0;
+                this.user.name = '';
                 this.$router.push({name: 'list'});
             }
         },
         checklogin() {
-            api.checklogin().then((res) => {
-                if (res) {
-                    this.user = Object.assign(this.user, res);
+            api.checklogin().then(res => {
+                if (!res.err) {
+                    this.user.id = res.data.id;
+                    this.user.name = res.data.name;
                 }
             });
         }
