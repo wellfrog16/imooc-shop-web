@@ -43,7 +43,7 @@
         </template>
         <template slot="footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">继续</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">查看购物车</button>
+            <button type="button" class="btn btn-default" @click="goCart()">查看购物车</button>
         </template>
     </Modal>
 </div>
@@ -134,6 +134,10 @@ export default {
             } else {
                 console.log(res.err);
             }
+        },
+        goCart() {
+            $('#cartMessage').modal('hide');
+            this.$router.push({name: 'cart'});
         },
         refresh() {
             this.page = 1;
