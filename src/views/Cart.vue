@@ -41,7 +41,7 @@
                     Select ALL
                 </div>
                 <div class="col-xs-2 col-xs-offset-6">{{ totalPrice | currency('￥') }}</div>
-                <div class="col-xs-2">Check ALL</div>
+                <div class="col-xs-2" @click="$router.push({name: 'address'});">Check ALL</div>
             </div>
         </div>
         <Modal modal-id="deleteModal" modal-size="modal-sm" title="确认删除">
@@ -126,6 +126,7 @@ export default {
         }
     },
     computed: {
+        // 当前全选状态
         flagCheckAll() {
             for (const item of this.list) {
                 if (!item.checked) { return false; }

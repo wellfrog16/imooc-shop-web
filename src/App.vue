@@ -1,9 +1,11 @@
 <template>
     <div id="app">
+        <x-header></x-header>
         <div class="container">
-            <x-header></x-header>
             <breadcrumb>
-                <li slot="a"><a href="#">Test</a></li>
+                <template slot="a">
+                    <li class="breadcrumb-item"><a href="#">Test</a></li>
+                </template>
             </breadcrumb>
             <router-view/>
             <x-footer></x-footer>

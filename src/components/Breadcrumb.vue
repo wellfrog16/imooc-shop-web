@@ -1,9 +1,11 @@
 <template>
     <div class="row">
-        <ol class="breadcrumb">
-            <li><router-link to="/">Home</router-link></li>
-            <slot name="a"></slot>
-        </ol>
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><router-link to="/">Home</router-link></li>
+                <slot name="a"></slot>
+            </ol>
+        </div>
     </div>
 </template>
 
