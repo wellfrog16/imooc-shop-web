@@ -1,27 +1,37 @@
 <template>
 <div class="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-nav" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Shop</a>
-            </div>
 
-            <div class="collapse navbar-collapse" id="top-nav">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" v-text="user.name"></a></li>
-                    <li v-if="!user.id" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li>
-                    <li v-if="user.id" @click="logout"><a href="#">Logout</a></li>
-                    <li v-if="user.id"><router-link to="/cart">Cart <span class="badge">5</span></router-link></li>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top justify-content-end">
+        <!-- <div class="container"> -->
+            <a class="navbar-brand" href="#">SHOP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" v-text="user.name"></a>
+                    </li>
+                    <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#myModal">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item" v-if="user.id" @click="logout">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                    <li class="nav-item" v-if="user.id">
+                        <router-link class="nav-link" to="/cart">Cart <span class="badge badge-pill badge-success">5</span></router-link>
+                    </li>
+                <!-- <li class="nav-item"><a href="#" v-text="user.name"></a></li>
+                <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> -->
+                <!-- <li class="nav-item" v-if="user.id" @click="logout"><a href="#">Logout</a></li>
+                <li class="nav-item" v-if="user.id"><router-link to="/cart">Cart <span class="badge">5</span></router-link></li> -->
                 </ul>
             </div>
-        </div>
+        <!-- </div> -->
     </nav>
 
     <Modal modal-id="myModal" modal-size="modal-sm" title="登陆">
