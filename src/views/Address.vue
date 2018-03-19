@@ -1,15 +1,18 @@
 <template>
-    <div class="address">
-
-    </div>
+    <section class="address">
+        <Step index="1"></Step>
+    </section>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {};
-        }
-    };
+import Step from '~components/Step.vue';
+
+export default {
+    components: { Step },
+    data() {
+        return {};
+    }
+};
 </script>
 
 <style lang="less">
