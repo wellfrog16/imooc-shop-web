@@ -40,7 +40,7 @@
             <div>应付:{{ totalOrder }}</div>
         </div>
 
-        <a class="btn btn-primary">下一步</a>
+        <a class="btn btn-primary" @click="payment()">付款</a>
     </div>
 </template>
 
@@ -72,6 +72,9 @@ export default {
             } else {
                 this.list = res.data.list;
             }
+        },
+        payment() {
+            console.log('付款');
         }
     },
     computed: {
