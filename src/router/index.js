@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import List from '~views/List';
 import Cart from '~views/Cart';
 import Address from '~views/Address';
+import Order from '~views/Order';
 
 Vue.use(Router);
 
@@ -25,6 +26,11 @@ const router = new Router({
             path: '/address',
             name: 'address',
             component: Address
+        },
+        {
+            path: '/order',
+            name: 'order',
+            component: Order
         }
     ]
 });
