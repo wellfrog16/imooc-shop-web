@@ -46,7 +46,8 @@
 
 <script>
 import Step from '~components/Step.vue';
-import api from '@/api/cart';
+import cartApi from '@/api/cart';
+import orderApi from '@/api/order';
 
 export default {
     components: { Step },
@@ -66,7 +67,7 @@ export default {
             this.loadList();
         },
         async loadList() {
-            const res = await api.list();
+            const res = await cartApi.list();
             if (res.err) {
                 console.log(res.err);
             } else {
@@ -74,7 +75,11 @@ export default {
             }
         },
         payment() {
-            console.log('付款');
+            // todo 禁用按钮
+            orderApi.insert({ addressId: this.$route.query.addressId, discount: this.discount, tax: this.tax, shipping: this.shipping }).then(res => {
+                console.log(res.id);
+                this.$router.push({ name: 'success', params: { id: res.data.id } });
+            });
         }
     },
     computed: {

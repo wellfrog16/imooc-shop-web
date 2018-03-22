@@ -4,6 +4,7 @@ import List from '~views/List';
 import Cart from '~views/Cart';
 import Address from '~views/Address';
 import Order from '~views/Order';
+import Success from '~views/Success';
 
 Vue.use(Router);
 
@@ -31,6 +32,11 @@ const router = new Router({
             path: '/order',
             name: 'order',
             component: Order
+        },
+        {
+            path: '/success/:id',
+            name: 'success',
+            component: Success
         }
     ]
 });

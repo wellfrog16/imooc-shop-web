@@ -5,9 +5,11 @@ const base = '/imooc-shop/order';
 const insert = params => axios.post(`${base}`, params).then(res => res);
 const list = () => axios.get(`${base}`).then(res => res);
 const del = id => axios.delete(`${base}/${id}`).then(res => res);
+const detail = id => axios.get(`${base}/${id}`).then(res => res);
 
 export default {
     list,
     insert,
-    del
+    del,
+    detail
 };
