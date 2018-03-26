@@ -23,7 +23,7 @@
                         <a class="nav-link" href="#">Logout</a>
                     </li>
                     <li class="nav-item" v-if="user.id">
-                        <router-link class="nav-link" to="/cart">Cart <span class="badge badge-pill badge-success">5</span></router-link>
+                        <router-link class="nav-link" to="/cart">Cart <span class="badge badge-pill badge-success" v-text="count"></span></router-link>
                     </li>
                 <!-- <li class="nav-item"><a href="#" v-text="user.name"></a></li>
                 <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> -->
@@ -59,7 +59,9 @@
 <script>
 import Modal from '~components/Modal.vue';
 import api from '@/api/user';
+import cartApi from '@/api/cart';
 import $ from 'jquery';
+import { mapState } from 'vuex';
 
 export default {
     name: 'x-header',
@@ -85,6 +87,10 @@ export default {
             this.form.fields.password = '';
         }).on('shown.bs.modal', () => {
             $('#username').focus();
+        });
+
+        cartApi.count().then(res => {
+            this.$store.commit('updateCartCount', res.data.count);
         });
 
         this.checklogin();
@@ -123,6 +129,12 @@ export default {
                 }
             });
         }
+    },
+    computed: {
+        ...mapState(['count'])
+        // count() {
+        //     return this.$store.state.count;
+        // }
     }
 };
 </script>

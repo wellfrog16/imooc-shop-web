@@ -30,7 +30,7 @@
                     </div><!-- /input-group -->
                 </div>
                 <div class="col-xs-2 subtotal">{{ item.price * item.count }}</div>
-                <div class="col-xs-2 remove"><span class="glyphicon glyphicon-trash" @click="delConfirm(item)"></span></div>
+                <div class="col-xs-2 remove"><span class="glyphicon glyphicon-trash" @click="delConfirm(item)">remove</span></div>
             </div>
 
             <div class="row total">
@@ -88,13 +88,14 @@ export default {
         },
         delConfirm(item) {
             $('#deleteModal').modal('show');
-            this.save(item);
+            this.goods = item;
         },
         async remove() {
             const res = await api.del(this.goods.id);
             if (res.err) {
                 console.log(res.err);
             } else {
+                this.$store.commit('updateCartCount', -this.goods.count);
                 $('#deleteModal').modal('hide');
                 this.loadList();
             }
@@ -102,6 +103,7 @@ export default {
         count(item, num) {
             if (!(item.count === 1 && num < 0)) {
                 item.count += num;
+                this.$store.commit('updateCartCount', num);
                 this.save(item);
             }
         },

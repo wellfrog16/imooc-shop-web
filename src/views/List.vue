@@ -130,6 +130,7 @@ export default {
         async addCart(id) {
             const res = await cartApi.insert(id);
             if (!res.err) {
+                this.$store.commit('updateCartCount', 1);
                 $('#cartMessage').modal('show');
             } else {
                 console.log(res.err);
