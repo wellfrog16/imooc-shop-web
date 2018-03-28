@@ -1,15 +1,13 @@
 <template>
-    <div id="app">
+    <div id="app" class="container">
         <x-header></x-header>
-        <div class="container">
-            <breadcrumb>
-                <template slot="a">
-                    <li class="breadcrumb-item"><a href="#">Test</a></li>
-                </template>
-            </breadcrumb>
-            <router-view/>
-            <x-footer></x-footer>
-        </div>
+        <breadcrumb>
+            <template slot="a">
+                <li class="breadcrumb-item"><a href="#">Test</a></li>
+            </template>
+        </breadcrumb>
+        <router-view/>
+        <x-footer></x-footer>
     </div>
 </template>
 

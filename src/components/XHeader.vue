@@ -1,40 +1,26 @@
 <template>
-<div class="header">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top justify-content-end">
-        <!-- <div class="container"> -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
             <a class="navbar-brand" href="#">SHOP</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" v-text="user.name"></a>
-                    </li>
-                    <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#myModal">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
-                    <li class="nav-item" v-if="user.id" @click="logout">
-                        <a class="nav-link" href="#">Logout</a>
-                    </li>
-                    <li class="nav-item" v-if="user.id">
-                        <router-link class="nav-link" to="/cart">Cart <span class="badge badge-pill badge-success" v-text="count"></span></router-link>
-                    </li>
-                <!-- <li class="nav-item"><a href="#" v-text="user.name"></a></li>
-                <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> -->
-                <!-- <li class="nav-item" v-if="user.id" @click="logout"><a href="#">Logout</a></li>
-                <li class="nav-item" v-if="user.id"><router-link to="/cart">Cart <span class="badge">5</span></router-link></li> -->
-                </ul>
-            </div>
-        <!-- </div> -->
+            <ul class="nav justify-content-end">
+                <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#loginModal">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" v-text="user.name" v-if="user.name"></a>
+                </li>
+                <li class="nav-item" v-if="user.id" @click="logout">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+                <li class="nav-item" v-if="user.id">
+                    <router-link class="nav-link" to="/cart">Cart <span class="badge badge-pill badge-success" v-text="count"></span></router-link>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    <Modal modal-id="myModal" modal-size="modal-sm" title="登陆">
+    <Modal modal-id="loginModal" modal-size="modal-sm" title="登陆">
         <template slot="body">
             <div class="form-group" v-if="loginError">
                 <label>登陆失败</label>
@@ -50,10 +36,10 @@
         </template>
         <template slot="footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-info" @click="login()">登入</button>
+            <button type="button" class="btn btn-primary" @click="login()">登入</button>
         </template>
     </Modal>
-</div>
+</header>
 </template>
 
 <script>
@@ -140,9 +126,9 @@ export default {
 </script>
 
 <style lang="less">
-.header {
-    .modal-dialog {
-        margin-top: 30vh;
+header {
+    .navbar-collapse {
+        flex-grow: initial;
     }
 }
 </style>
