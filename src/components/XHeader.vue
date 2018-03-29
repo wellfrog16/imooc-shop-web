@@ -1,21 +1,23 @@
 <template>
 <header class="header">
     <nav class="navbar navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="#">SHOP</a>
-        <ul class="nav justify-content-end">
-            <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#loginModal">
-                <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:;" v-text="user.name" v-if="user.name"></a>
-            </li>
-            <li class="nav-item" v-if="user.id">
-                <router-link class="nav-link cart" to="/cart">Cart <span class="badge badge-pill badge-info" v-text="count"></span></router-link>
-            </li>
-            <li class="nav-item" v-if="user.id" @click="logout">
-                <a class="nav-link" href="#">Logout</a>
-            </li>
-        </ul>
+        <div class="container">
+            <a class="navbar-brand" href="/">SHOP</a>
+            <ul class="nav justify-content-end">
+                <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#loginModal">
+                    <a href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="p-2" href="javascript:;" v-text="user.name" v-if="user.name"></a>
+                </li>
+                <li class="nav-item" v-if="user.id">
+                    <router-link class="p-2 cart" to="/cart">Cart <span class="badge badge-pill badge-info" v-text="count"></span></router-link>
+                </li>
+                <li class="nav-item" v-if="user.id" @click="logout">
+                    <a class="pl-1" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <Modal modal-id="loginModal" modal-size="modal-sm" title="登陆">

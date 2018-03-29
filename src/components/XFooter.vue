@@ -1,6 +1,6 @@
 <template>
-    <footer class="container-fluid">
-        底部信息
+    <footer class="container text-center text-white py-3 bg-primary">
+        vue2 + bootstrap 4.0 练习, by wellfrog
     </footer>
 </template>
 
@@ -11,10 +11,5 @@
 </script>
 
 <style lang="less">
-    footer {
-        text-align: center;
-        line-height: 30px;
-        background-color: gray;
-        color: #Fff;
-    }
+
 </style>
