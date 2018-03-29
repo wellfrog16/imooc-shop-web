@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer class="container-fluid">
         底部信息
     </footer>
 </template>
@@ -15,7 +15,6 @@
         text-align: center;
         line-height: 30px;
         background-color: gray;
-        margin: 0 -15px;
         color: #Fff;
     }
 </style>

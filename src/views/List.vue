@@ -1,51 +1,53 @@
 <template>
-<div class="row">
-    <div class="container-fluid goods">
-        <div class="row">
-            <div class="col-xs-12 navbar navbar-default">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Sort</a></li>
-                    <li><a href="#" @click="sort()">价格 {{ priceState }}</a></li>
-                </ul>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="container-fluid goods">
             <div class="row">
-                <div class="col-sm-3 filter">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">Price</div>
-                        <ul class="list-group">
-                            <li class="list-group-item selected" @click="filterPrice(0, 0, 0)">All</li>
-                            <li class="list-group-item" v-for="(item, index) in idFiler" :key="index" @click="filterPrice(index+1, item.start, item.end)">{{ item.start }} - {{ item.end }}</li>
-                        </ul>
-                    </div>
+                <div class="col-xs-12 navbar navbar-default">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Sort</a></li>
+                        <li><a href="#" @click="sort()">价格 {{ priceState }}</a></li>
+                    </ul>
                 </div>
-                <div class="col-sm-9 list-goods">
-                    <div class="row">
-                        <div v-for="item in list" :key="item.id" class="col-sm-4 col-xs-12">
-                            <img v-bind:src="item.photo" alt="">
-                            <div class="header">
-                                <span class="name">{{ item.name }}</span>
-                                <span class="price">{{ item.price }}</span>
+                <div class="row">
+                    <div class="col-sm-3 filter">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Price</div>
+                            <ul class="list-group">
+                                <li class="list-group-item selected" @click="filterPrice(0, 0, 0)">All</li>
+                                <li class="list-group-item" v-for="(item, index) in idFiler" :key="index" @click="filterPrice(index+1, item.start, item.end)">{{ item.start }} - {{ item.end }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 list-goods">
+                        <div class="row">
+                            <div v-for="item in list" :key="item.id" class="col-sm-4 col-xs-12">
+                                <img v-bind:src="item.photo" alt="">
+                                <div class="header">
+                                    <span class="name">{{ item.name }}</span>
+                                    <span class="price">{{ item.price }}</span>
+                                </div>
+                                <div class="button" @click="addCart(item.id)">加入购物车</div>
                             </div>
-                            <div class="button" @click="addCart(item.id)">加入购物车</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10" class="infinite-scroll">
-                {{ loadInfo }}
+                <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10" class="infinite-scroll">
+                    {{ loadInfo }}
+                </div>
             </div>
         </div>
-    </div>
 
-    <Modal modal-id="cartMessage" modal-size="modal-sm" title="信息">
-        <template slot="body">
-            加入成功
-        </template>
-        <template slot="footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">继续</button>
-            <button type="button" class="btn btn-default" @click="goCart()">查看购物车</button>
-        </template>
-    </Modal>
+        <Modal modal-id="cartMessage" modal-size="modal-sm" title="信息">
+            <template slot="body">
+                加入成功
+            </template>
+            <template slot="footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">继续</button>
+                <button type="button" class="btn btn-default" @click="goCart()">查看购物车</button>
+            </template>
+        </Modal>
+    </div>
 </div>
 </template>
 
