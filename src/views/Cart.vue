@@ -1,59 +1,61 @@
 <template>
-    <div class="container cart">
+    <section class="container cart">
         <breadcrumb>
-            <template slot="main"><li class="breadcrumb-item">List</li></template>
+            <template slot="main"><li class="breadcrumb-item">Cart</li></template>
         </breadcrumb>
         <h2>My Cart</h2>
-        <div class="row bg-primary text-white py-3">
+        <div class="row bg-primary text-white py-3 d-none d-lg-flex">
             <div class="col-4 text-center">ITEMS</div>
-            <div class="col-2">PRICE</div>
-            <div class="col-2">QUANTITY</div>
-            <div class="col-2">SUBTOTAL</div>
-            <div class="col-2">REMOVE</div>
+            <div class="col-2 text-right">PRICE</div>
+            <div class="col-2 text-center">QUANTITY</div>
+            <div class="col-2 text-right">SUBTOTAL</div>
+            <div class="col-2 text-center"></div>
         </div>
-        <div class="row list" v-for="item in list" :key="item.id">
-            <div class="col-4 item d-flex flex-column align-content-center">
+        <div class="row list flex-row align-items-center pt-3 pb-sm-3 pb-0 border-bottom border-top mb-2 mb-lg-0" v-for="item in list" :key="item.id">
+            <div class="col-8 col-lg-4 d-flex flex-row align-items-center item">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" v-model="item.checked" :id="`checkbox${item.id}`" @click="check(item)">
-                    <label class="custom-control-label" :for="`checkbox${item.id}`"><img :src="item.photo" width="100" height="100" alt=""></label>
+                    <label class="custom-control-label" :for="`checkbox${item.id}`"> </label>
                 </div>
-                <div v-text="item.name"></div>
+                <img :src="item.photo">
+                <span v-text="item.name" class="ml-3 d-none d-sm-block"></span>
             </div>
-            <div class="col-2 price">{{ item.price }}</div>
-            <div class="col-2 quantity">
+            <div class="col-4 col-lg-2 text-right price">{{ item.price | currency('￥') }}</div>
+            <div class="col-6 offset-6 offset-lg-0 col-lg-2 quantity">
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" @click="count(item, -1)">-</button>
+                        <button class="btn btn-secondary" type="button" @click="count(item, -1)">-</button>
                     </span>
-                    <input type="text" class="form-control" v-model="item.count">
+                    <input type="text" class="form-control text-center" v-model="item.count">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" @click="count(item, 1)">+</button>
+                        <button class="btn btn-secondary" type="button" @click="count(item, 1)">+</button>
                     </span>
                 </div><!-- /input-group -->
             </div>
-            <div class="col-2 subtotal">{{ item.price * item.count }}</div>
-            <div class="col-2 remove"><span class="glyphicon glyphicon-trash" @click="delConfirm(item)">remove</span></div>
+            <div class="col-4 offset-8 offset-lg-0 col-lg-2 subtotal text-right">{{ item.price * item.count | currency('￥') }}</div>
+            <div class="col-2 remove text-center d-none d-lg-block"><span class="glyphicon glyphicon-trash" @click="delConfirm(item)"><i class="iconfont icon-shanchu"></i></span></div>
+            <div class="col-12 d-block d-sm-none pl-3 py-2 mt-3 bg-light" v-text="item.name"></div>
         </div>
 
-        <div class="row total">
-            <div class="col-xs-2">
-                <label class="btn btn-primary">
-                    <input type="checkbox" value="true" id="checkAll" :checked="flagCheckAll" @click="checkAll()">
-                </label>
-                Select ALL
+        <div class="row mt-2">
+            <div class="col-6 col-md-8 py-2 bg-secondary text-white">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" value="true" id="checkAll" :checked="flagCheckAll" @click="checkAll()">
+                    <label class="custom-control-label" for="checkAll">Select ALL</label>
+                </div>
             </div>
-            <div class="col-xs-2 col-xs-offset-6">{{ totalPrice | currency('￥') }}</div>
-            <div class="col-xs-2" @click="$router.push({name: 'address'});">Check ALL</div>
+            <div class="col-6 col-md-2 py-2 bg-secondary text-white text-right">{{ totalPrice | currency('￥') }}</div>
+            <button class="col-12 col-md-2 text-center text-white py-2 btn btn-success" :disabled="totalPrice === 0" @click="$router.push({name: 'address'});">Check ALL</button>
         </div>
 
         <Modal modal-id="deleteModal" modal-size="modal-sm" title="确认删除">
             <template slot="body">您确认要删除吗？</template>
             <template slot="footer">
-                <button type="button" class="btn btn-danger" @click="remove()">删除</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" @click="remove()">删除</button>
             </template>
         </Modal>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -151,49 +153,67 @@ export default {
 
 <style lang="less">
 .cart {
-    @height: 120px;
+    .item img {
+        width: 100px;
+        height: 100px;
+    }
 
-    .list {
-        height: @height;
-        text-align: center;
-        border-bottom: 1px solid grey;
+    .quantity {
 
-        .item {
-            text-align: left;
-            img {
-
-            }
+        .input-group {
+            width: 120px;
+            margin: 0 auto;
         }
+    }
 
-        .quantity {
+    .remove {
+        span {
+            cursor: pointer;
 
-            .input-group {
-                width: 120px;
-                margin: 40px auto 0 auto;
-            }
-
-            input {
-                text-align: center;
-            }
-        }
-
-        .remove {
-            font-size: 20px;
-
-            span {
-                cursor: pointer;
-
-                &:hover {
-                    color: red;
-                }
+            &:hover {
+                color: red;
             }
         }
     }
-    .header {
-        background-color: #888;
-        color: #fff;
-        text-align: center;
-        line-height: 30px;
+}
+
+@media screen and (max-width: 992px) {
+    .cart {
+        .price {
+            margin-top: -4rem;
+        }
+        .quantity {
+            margin-top: -6rem;
+
+            .input-group {
+                width: 120px;
+                margin: 0;
+                margin-left: auto;
+            }
+        }
+        .subtotal {
+            margin-top: -2rem;
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .cart {
+        .price {
+            margin-top: -4rem;
+        }
+        .quantity {
+            margin-top: -6rem;
+
+            .input-group {
+                width: 120px;
+                margin: 0;
+                margin-left: auto;
+            }
+        }
+        .subtotal {
+            margin-top: -2rem;
+        }
     }
 }
 
