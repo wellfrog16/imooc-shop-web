@@ -4,7 +4,7 @@
             <template slot="main"><li class="breadcrumb-item">Address</li></template>
         </breadcrumb>
         <Step step="0"></Step>
-        <h2>Address</h2>
+        <h2>Confirm address</h2>
         <div class="row">
             <div class="col-12 col-sm-6 col-lg-3 mb-3" v-for="(item, index) in listFilter"
                     :key="item.id"
@@ -12,12 +12,12 @@
                 <div class="card" :class="{ 'border-success': index === checkedIndex, 'text-success': index === checkedIndex }">
                     <div class="card-body">
                         <h5 class="card-title" v-text="item.username"></h5>
-                        <p class="card-text" v-text="item.street"></p>
+                        <p class="card-text street" v-text="item.street"></p>
                         <p class="card-text" v-text="item.postcode"></p>
                         <p class="card-text" v-text="item.mobile"></p>
                         <a href="#" class="card-link" v-if="!item.default" @click="setDefault(item.id)">set default</a>
                         <a href="#" class="card-link" v-if="item.default">default</a>
-                        <a href="#" class="card-link float-right" @click="remove(item.id)"><i class="iconfont icon-shanchu"></i></a>  
+                        <a href="#" class="card-link float-right" @click="delConfirm(item)"><i class="iconfont icon-shanchu"></i></a>  
                     </div>
                 </div>
             </div>
@@ -27,12 +27,21 @@
         
         <div class="row mt-3">
             <button class="col-6 col-md-2 btn btn-secondary" @click="$router.go(-1)">PREV</button>
-            <button class="col-6 col-md-2 offset-md-8 btn btn-success" @click="next()">NEXT</button>
+            <button class="col-6 col-md-2 offset-md-8 btn btn-success" :disabled="typeof checkedIndex !== 'number'" @click="next()">NEXT</button>
         </div>
+
+        <Modal modal-id="deleteModal" modal-size="modal-sm" title="确认删除">
+            <template slot="body">您确认要删除吗？</template>
+            <template slot="footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" @click="remove()">删除</button>
+            </template>
+        </Modal>
     </section>
 </template>
 
 <script>
+import Modal from '~components/Modal.vue';
 import Step from '~components/Step.vue';
 import Breadcrumb from '~components/Breadcrumb.vue';
 import api from '@/api/address';
@@ -40,12 +49,13 @@ import utils from '@/utils/utils';
 import $ from 'jquery';
 
 export default {
-    components: { Step, Breadcrumb },
+    components: { Step, Breadcrumb, Modal },
     data() {
         return {
             limit: 4,
             checkedIndex: null,
-            list: []
+            list: [],
+            address: {}
         };
     },
     mounted() {
@@ -69,6 +79,11 @@ export default {
                 this.list = res.data.list;
             }
         },
+        delConfirm(item) {
+            if (this.list.length <= 1) { return false; }
+            $('#deleteModal').modal('show');
+            this.address = item;
+        },
         expand() {
             if (this.limit === 4) {
                 this.limit = this.list.length;
@@ -81,8 +96,14 @@ export default {
         setDefault(id) {
             api.setDefault(id).then(() => this.refresh());
         },
-        remove(id) {
-            api.del(id).then(() => this.refresh());
+        async remove() {
+            const res = await api.del(this.address.id);
+            if (res.err) {
+                console.log(res.err);
+            } else {
+                $('#deleteModal').modal('hide');
+                this.refresh();
+            }
         },
         next() {
             this.$router.push({ name: 'order', query: { addressId: this.list[this.checkedIndex].id } });
@@ -106,6 +127,8 @@ export default {
 
 <style lang="less">
 .address {
-
+    .street {
+        height: 5rem;
+    }
 }
 </style>

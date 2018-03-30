@@ -197,24 +197,4 @@ export default {
     }
 }
 
-@media screen and (max-width: 992px) {
-    .cart {
-        .price {
-            margin-top: -4rem;
-        }
-        .quantity {
-            margin-top: -6rem;
-
-            .input-group {
-                width: 120px;
-                margin: 0;
-                margin-left: auto;
-            }
-        }
-        .subtotal {
-            margin-top: -2rem;
-        }
-    }
-}
-
 </style>

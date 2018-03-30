@@ -20,7 +20,7 @@
             <div class="row">
                 <div v-for="item in list" :key="item.id" class="col-12 col-md-6 col-lg-4 mb-4 item">
                     <div class="card flex-md-column flex-row">
-                        <img class="card-img-top img-fluid" v-bind:src="item.photo" >
+                        <img class="card-img-top img-fluid" v-lazy="item.photo" >
                         <div class="card-body">
                             <h5 class="card-title">{{ item.name }}</h5>
                             <p class="card-text">{{ item.price }}</p>

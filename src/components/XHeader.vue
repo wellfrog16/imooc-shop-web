@@ -1,20 +1,23 @@
 <template>
 <header class="header">
-    <nav class="navbar navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-light bg-light fixed-top px-0">
         <div class="container">
             <a class="navbar-brand" href="/">SHOP</a>
             <ul class="nav justify-content-end">
                 <li class="nav-item" v-if="!user.id" data-toggle="modal" data-target="#loginModal">
                     <a href="#">Login</a>
                 </li>
-                <li class="nav-item">
-                    <a class="p-2" href="javascript:;" v-text="user.name" v-if="user.name"></a>
+                <li class="nav-item" v-if="user.name">
+                    <div class="dropdown show">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" v-text="user.name"></a>
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" @click="logout">Logout</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item" v-if="user.id">
-                    <router-link class="p-2 cart" to="/cart">Cart <span class="badge badge-pill badge-info" v-text="count"></span></router-link>
-                </li>
-                <li class="nav-item" v-if="user.id" @click="logout">
-                    <a class="pl-1" href="#">Logout</a>
+                    <router-link class="pl-3 cart" to="/cart">Cart <span class="badge badge-pill badge-info" v-text="count"></span></router-link>
                 </li>
             </ul>
         </div>
@@ -73,10 +76,6 @@ export default {
             $('#username').focus();
         });
 
-        cartApi.count().then(res => {
-            this.$store.commit('updateCartCount', res.data.count);
-        });
-
         this.checklogin();
     },
     methods: {
@@ -92,6 +91,8 @@ export default {
                 this.user.id = res.data.id;
                 this.user.name = res.data.name;
                 $('#loginModal').modal('hide');
+
+                this.updateCartCount();
             }
         },
         async logout() {
@@ -109,7 +110,12 @@ export default {
                     this.user.id = res.data.id;
                     this.user.name = res.data.name;
                 }
+
+                this.updateCartCount();
             });
+        },
+        updateCartCount() {
+            cartApi.count().then(res => this.$store.commit('updateCartCount', res.data.count));
         }
     },
     computed: {
