@@ -14,7 +14,7 @@ Vue.filter('currency', utils.currency);
 Vue.use(infiniteScroll);
 Vue.use(VueLazyload, {
     preLoad: 1.3,
-    loading: './static/loading-cylon-red.svg',
+    loading: './static/svg/loading-cylon-red.svg',
     attempt: 1
 });
 Vue.use(Vuex);
