@@ -62,16 +62,16 @@ export default {
             loginError: false,
             form: {
                 fields: {
-                    name: '',
-                    password: ''
+                    name: 'guest',
+                    password: '123456'
                 }
             }
         };
     },
     mounted() {
         $('#loginModal').on('show.bs.modal', () => {
-            this.form.fields.name = '';
-            this.form.fields.password = '';
+            // this.form.fields.name = '';
+            // this.form.fields.password = '';
         }).on('shown.bs.modal', () => {
             $('#username').focus();
         });

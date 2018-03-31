@@ -1,6 +1,6 @@
 # imooc-shop-web
 
-> A Vue.js project
+> 一个商场建议练习
 
 ## Build Setup
 
